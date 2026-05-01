@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SteadyPace — Exercise Without the Anxiety</title>
+    <meta name="description"
+        content="SteadyPace helps people who avoid exercise because of anxiety. AI-adaptive plans, voice-guided sessions, and gentle exposure — at your pace.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --fg: #1a1a1a;
+            --fg-2: #555;
+            --fg-3: #999;
+            --bg: #f6f3ef;
+            --bg-2: #eee9e2;
+            --bg-3: #e3dbd1;
+            --sage: #6b8f71;
+            --sage-deep: #4a6b4f;
+            --sage-pale: #d4e4d6;
+            --warm: #c49a6c;
+            --serif: 'Instrument Serif', serif;
+            --sans: 'Outfit', sans-serif
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--fg);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: .03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 24px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background .4s, padding .4s
+        }
+
+        nav.scrolled {
+            background: rgba(246, 243, 239, .92);
+            backdrop-filter: blur(24px);
+            padding: 16px 48px;
+            border-bottom: 1px solid rgba(0, 0, 0, .05)
+        }
+
+        .logo {
+            font-family: var(--serif);
+            font-size: 24px;
+            color: var(--fg);
+            text-decoration: none
+        }
+
+        .nav-r {
+            display: flex;
+            gap: 36px;
+            align-items: center
+        }
+
+        .nav-r a {
+            text-decoration: none;
+            color: var(--fg-2);
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: .02em;
+            transition: color .2s
+        }
+
+        .nav-r a:hover {
+            color: var(--fg)
+        }
+
+        .nav-pill {
+            background: var(--fg);
+            color: var(--bg) !important;
+            padding: 10px 28px;
+            border-radius: 100px;
+            font-weight: 500 !important;
+            font-size: 13px !important;
+            letter-spacing: .03em;
+            transition: transform .2s, box-shadow .2s
+        }
+
+        .nav-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .15)
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 140px 48px 80px;
+            gap: 40px;
+            position: relative
+        }
+
+        .hero-text {
+            max-width: 560px
+        }
+
+        .hero-eyebrow {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--sage);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp .8s .2s forwards
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-size: clamp(44px, 5.5vw, 72px);
+            line-height: 1.05;
+            font-weight: 400;
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeUp .8s .4s forwards
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--sage-deep)
+        }
+
+        .hero-body {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--fg-2);
+            font-weight: 300;
+            margin-bottom: 40px;
+            max-width: 440px;
+            opacity: 0;
+            animation: fadeUp .8s .6s forwards
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp .8s .8s forwards
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all .3s
+        }
+
+        .btn-dark {
+            background: var(--fg);
+            color: var(--bg)
+        }
+
+        .btn-dark:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, .18)
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--fg-2);
+            border: 1.5px solid var(--bg-3)
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--fg-2);
+            color: var(--fg)
+        }
+
+        .btn-light {
+            background: white;
+            color: var(--fg)
+        }
+
+        .btn-light:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(255, 255, 255, .15)
+        }
+
+        .hero-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            opacity: 0;
+            animation: fadeUp .8s .65s forwards
+        }
+
+        .hero-panel {
+            width: min(460px, 100%);
+            background: linear-gradient(165deg, #fff 0%, #f2ece4 100%);
+            border: 1.5px solid var(--bg-3);
+            border-radius: 28px;
+            padding: 28px;
+            box-shadow: 0 26px 60px rgba(75, 62, 49, .08);
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero-panel::before {
+            content: '';
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(107, 143, 113, .2) 0%, rgba(107, 143, 113, 0) 70%);
+            top: -120px;
+            right: -80px
+        }
+
+        .hero-kicker {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--sage-deep);
+            margin-bottom: 18px
+        }
+
+        .hero-testimonial {
+            font-family: var(--serif);
+            font-size: clamp(28px, 3vw, 36px);
+            line-height: 1.32;
+            color: var(--fg);
+            margin-bottom: 22px
+        }
+
+        .hero-note {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--fg-2);
+            max-width: 36ch;
+            font-weight: 300
+        }
+
+        .hero-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px
+        }
+
+        .hero-pill {
+            font-size: 12px;
+            color: var(--fg-2);
+            background: rgba(255, 255, 255, .72);
+            border: 1px solid rgba(0, 0, 0, .08);
+            border-radius: 18px;
+            padding: 8px 14px
+        }
+
+        .marquee-wrap {
+            overflow: hidden;
+            padding: 32px 0;
+            border-top: 1px solid var(--bg-3);
+            border-bottom: 1px solid var(--bg-3)
+        }
+
+        .marquee {
+            display: flex;
+            gap: 64px;
+            white-space: nowrap;
+            animation: scroll 25s linear infinite
+        }
+
+        .marquee span {
+            font-family: var(--serif);
+            font-size: 20px;
+            color: var(--fg-3);
+            display: flex;
+            align-items: center;
+            gap: 24px
+        }
+
+        .marquee span::after {
+            content: '·';
+            font-size: 28px;
+            opacity: .3
+        }
+
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 80vh;
+            align-items: center
+        }
+
+        .split-text {
+            padding: 80px 48px 80px 80px;
+            max-width: 560px;
+            margin-left: auto
+        }
+
+        .split-visual {
+            background: var(--fg);
+            color: white;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100%
+        }
+
+        .split-visual.alt {
+            background: var(--sage-deep)
+        }
+
+        .split.reverse .split-text {
+            margin-left: 0;
+            margin-right: auto;
+            padding: 80px 80px 80px 48px
+        }
+
+        .split.reverse {
+            direction: rtl
+        }
+
+        .split.reverse>* {
+            direction: ltr
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 20px
+        }
+
+        .eyebrow.sage {
+            color: var(--sage)
+        }
+
+        .eyebrow.light {
+            color: rgba(255, 255, 255, .4)
+        }
+
+        .split-title {
+            font-family: var(--serif);
+            font-size: clamp(28px, 3vw, 42px);
+            line-height: 1.15;
+            margin-bottom: 20px
+        }
+
+        .split-body {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--fg-2);
+            font-weight: 300
+        }
+
+        .split-visual .split-body {
+            color: rgba(255, 255, 255, .65)
+        }
+
+        .quote {
+            font-family: var(--serif);
+            font-size: 24px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, .85);
+            font-style: italic
+        }
+
+        .quote-attr {
+            font-family: var(--sans);
+            font-size: 13px;
+            color: rgba(255, 255, 255, .3);
+            margin-top: 20px;
+            font-style: normal
+        }
+
+        .steps-section {
+            padding: 120px 48px
+        }
+
+        .steps-header {
+            text-align: center;
+            margin-bottom: 80px
+        }
+
+        .steps-header h2 {
+            font-family: var(--serif);
+            font-size: clamp(32px, 4vw, 52px)
+        }
+
+        .steps-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            max-width: 1100px;
+            margin: 0 auto
+        }
+
+        .step {
+            padding: 40px 32px;
+            position: relative;
+            border-left: 1px solid var(--bg-3)
+        }
+
+        .step:first-child {
+            border-left: none
+        }
+
+        .step-num {
+            font-family: var(--serif);
+            font-size: 64px;
+            color: var(--bg-3);
+            line-height: 1;
+            margin-bottom: 24px
+        }
+
+        .step h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px
+        }
+
+        .step p {
+            font-size: 14px;
+            color: var(--fg-2);
+            line-height: 1.7;
+            font-weight: 300
+        }
+
+        .features-strip {
+            background: var(--bg-2);
+            padding: 100px 48px
+        }
+
+        .features-inner {
+            max-width: 1100px;
+            margin: 0 auto
+        }
+
+        .features-strip h2 {
+            font-family: var(--serif);
+            font-size: clamp(28px, 3.5vw, 44px);
+            margin-bottom: 60px;
+            max-width: 500px
+        }
+
+        .feat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px 40px
+        }
+
+        .feat {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--sage-pale)
+        }
+
+        .feat h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px
+        }
+
+        .feat p {
+            font-size: 14px;
+            color: var(--fg-2);
+            line-height: 1.7;
+            font-weight: 300
+        }
+
+        .pricing-section {
+            padding: 120px 48px;
+            text-align: center
+        }
+
+        .pricing-section h2 {
+            font-family: var(--serif);
+            font-size: clamp(28px, 3.5vw, 44px);
+            margin-bottom: 12px
+        }
+
+        .pricing-section .sub {
+            font-size: 17px;
+            color: var(--fg-2);
+            font-weight: 300;
+            margin-bottom: 60px
+        }
+
+        .price-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 920px;
+            margin: 0 auto
+        }
+
+        .price-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 32px;
+            border: 1.5px solid var(--bg-3);
+            text-align: left;
+            transition: transform .3s, border-color .3s;
+            position: relative
+        }
+
+        .price-box:hover {
+            transform: translateY(-6px)
+        }
+
+        .price-box.pop {
+            border-color: var(--sage)
+        }
+
+        .price-box.pop::before {
+            content: 'BEST VALUE';
+            position: absolute;
+            top: -11px;
+            left: 32px;
+            background: var(--sage);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .1em
+        }
+
+        .price-name {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 16px
+        }
+
+        .price-amt {
+            font-family: var(--serif);
+            font-size: 40px;
+            line-height: 1
+        }
+
+        .price-per {
+            font-size: 14px;
+            color: var(--fg-3);
+            margin-bottom: 24px
+        }
+
+        .price-list {
+            list-style: none;
+            margin-bottom: 28px
+        }
+
+        .price-list li {
+            font-size: 13px;
+            color: var(--fg-2);
+            padding: 6px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-weight: 300
+        }
+
+        .price-list li::before {
+            content: '→';
+            color: var(--sage);
+            font-weight: 600
+        }
+
+        .price-box .btn {
+            width: 100%;
+            justify-content: center;
+            padding: 14px;
+            font-size: 13px
+        }
+
+        .faq-section {
+            padding: 100px 48px;
+            max-width: 720px;
+            margin: 0 auto
+        }
+
+        .faq-section h2 {
+            font-family: var(--serif);
+            font-size: 36px;
+            margin-bottom: 48px
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--bg-3)
+        }
+
+        .faq-q {
+            padding: 24px 0;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .faq-q span {
+            transition: transform .3s;
+            display: inline-block;
+            color: var(--sage);
+            font-size: 20px
+        }
+
+        .faq-q.open span {
+            transform: rotate(45deg)
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s ease, padding .3s;
+            font-size: 14px;
+            color: var(--fg-2);
+            line-height: 1.8;
+            font-weight: 300
+        }
+
+        .faq-a.open {
+            max-height: 300px;
+            padding-bottom: 24px
+        }
+
+        .final {
+            padding: 140px 48px;
+            text-align: center;
+            background: var(--fg);
+            color: white
+        }
+
+        .final h2 {
+            font-family: var(--serif);
+            font-size: clamp(36px, 5vw, 60px);
+            line-height: 1.1;
+            margin-bottom: 20px
+        }
+
+        .final h2 em {
+            font-style: italic;
+            color: var(--sage-pale)
+        }
+
+        .cycle-word {
+            display: inline-block;
+            min-width: 7.8ch;
+            text-align: left
+        }
+
+        .cycle-word.swap {
+            animation: wordSwap .75s cubic-bezier(.22, .61, .36, 1)
+        }
+
+        .final p {
+            font-size: 17px;
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 40px;
+            font-weight: 300;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        footer {
+            background: var(--fg);
+            color: rgba(255, 255, 255, .3);
+            padding: 40px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            font-size: 12px
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, .3);
+            text-decoration: none
+        }
+
+        footer a:hover {
+            color: rgba(255, 255, 255, .6)
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px
+        }
+
+        .footer-disclaimer {
+            max-width: 600px;
+            line-height: 1.6;
+            font-size: 11px
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes scroll {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        @keyframes wordSwap {
+            0% {
+                opacity: .2;
+                transform: translateY(8px)
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity .9s ease, transform .9s ease
+        }
+
+        .reveal.vis {
+            opacity: 1;
+            transform: none
+        }
+
+        .reveal-d1 {
+            transition-delay: .1s
+        }
+
+        .reveal-d2 {
+            transition-delay: .2s
+        }
+
+        .reveal-d3 {
+            transition-delay: .3s
+        }
+
+        @media(max-width:900px) {
+            nav {
+                padding: 16px 24px
+            }
+
+            .nav-r {
+                gap: 20px
+            }
+
+            .nav-r a:not(.nav-pill) {
+                display: none
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 120px 24px 60px;
+                text-align: center
+            }
+
+            .hero-body {
+                max-width: 100%
+            }
+
+            .hero-actions {
+                justify-content: center
+            }
+
+            .hero-visual {
+                order: -1
+            }
+
+            .hero-panel {
+                padding: 22px
+            }
+
+            .hero-testimonial {
+                font-size: clamp(24px, 7vw, 32px)
+            }
+
+            .split {
+                grid-template-columns: 1fr
+            }
+
+            .split-text {
+                padding: 60px 24px;
+                max-width: 100%;
+                margin: 0
+            }
+
+            .split-visual {
+                padding: 60px 24px
+            }
+
+            .split.reverse {
+                direction: ltr
+            }
+
+            .steps-row {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .step {
+                border-left: none;
+                border-top: 1px solid var(--bg-3)
+            }
+
+            .step:nth-child(-n+2) {
+                border-top: none
+            }
+
+            .feat-grid {
+                grid-template-columns: 1fr
+            }
+
+            .price-row {
+                grid-template-columns: 1fr;
+                max-width: 400px
+            }
+
+            section,
+            .steps-section,
+            .features-strip,
+            .pricing-section,
+            .faq-section {
+                padding-left: 24px;
+                padding-right: 24px
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center
+            }
+        }
+
+        @media(max-width:600px) {
+            .final {
+                padding: 100px 20px
+            }
+
+            .final p {
+                font-size: 16px;
+                line-height: 1.75
+            }
+
+            .final .btn {
+                width: min(100%, 360px);
+                justify-content: center
+            }
+        }
+
+        @media(max-width:420px) {
+            .final h2 {
+                font-size: clamp(32px, 10vw, 40px)
+            }
+
+            .cycle-word {
+                min-width: 6.8ch
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="nav"><a href="/" class="logo">SteadyPace</a>
+        <div class="nav-r"><a href="#how">How it works</a><a href="#features">Features</a><a
+                href="#pricing">Pricing</a><a href="#download" class="nav-pill">Get the app</a></div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-text">
+            <div class="hero-eyebrow">For people who want to move again</div>
+            <h1>Exercise<br>without <em>the anxiety.</em></h1>
+            <p class="hero-body">Your heart races. You feel breathless. Something tells you to stop. SteadyPace helps
+                you stay — gently, at your pace, with a plan that adapts to&nbsp;you.</p>
+            <div class="hero-actions">
+                <a href="#download" class="btn btn-dark"><svg width="18" height="18" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                    </svg>Download for iOS</a>
+                <a href="#how" class="btn btn-ghost">Learn more</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-panel">
+                <p class="hero-kicker">From early users</p>
+                <p class="hero-testimonial">"This is the first time a fitness app didn't make me feel behind. It met
+                    me exactly where I was."</p>
+                <p class="hero-note">Built for people who feel overwhelmed by traditional fitness pressure, with calm
+                    pacing and no guilt.</p>
+                <div class="hero-pill-row">
+                    <span class="hero-pill">No pressure pacing</span>
+                    <span class="hero-pill">Anxiety-aware guidance</span>
+                    <span class="hero-pill">Progress you can sustain</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee-wrap">
+        <div class="marquee"><span>40 million adults with anxiety in the US</span><span>56% avoid exercise because of
+                body sensations</span><span>Zero apps designed for them</span><span>Until now</span><span>40 million
+                adults with anxiety in the US</span><span>56% avoid exercise because of body sensations</span><span>Zero
+                apps designed for them</span><span>Until now</span></div>
+    </div>
+
+    <div class="split">
+        <div class="split-text reveal">
+            <div class="eyebrow sage">The problem</div>
+            <h2 class="split-title">Fitness apps assume the hard part is&nbsp;fitness.</h2>
+            <p class="split-body">They track pace. They push you harder. They don't know that for some people, the
+                hardest part isn't the workout — it's what their body does during it. The racing heart. The
+                breathlessness. The feeling that something is&nbsp;wrong.</p>
+        </div>
+        <div class="split-visual">
+            <blockquote class="quote reveal">"I used to run marathons. Then I had my first panic attack during a run. I
+                haven't run since. That was three years&nbsp;ago."</blockquote>
+            <p class="quote-attr reveal reveal-d1">— Anonymous user</p>
+        </div>
+    </div>
+    <div class="split reverse">
+        <div class="split-text reveal">
+            <div class="eyebrow sage">The approach</div>
+            <h2 class="split-title">Graded exposure — the same principle therapists&nbsp;use.</h2>
+            <p class="split-body">Tiny, controlled increases in exertion. Walk 5 minutes. Jog 15 seconds. Walk 3
+                minutes. Repeat. Your body learns — through experience, not logic — that the sensation is temporary
+                and&nbsp;safe.</p>
+        </div>
+        <div class="split-visual alt">
+            <blockquote class="quote reveal">"I just want to go at all. Every other app wants me to go&nbsp;faster."
+            </blockquote>
+            <p class="quote-attr reveal reveal-d1">— Anonymous user</p>
+        </div>
+    </div>
+
+    <section class="steps-section" id="how">
+        <div class="steps-header reveal">
+            <div class="eyebrow sage">How it works</div>
+            <h2>Four steps to feeling safe<br>in your own body again.</h2>
+        </div>
+        <div class="steps-row">
+            <div class="step reveal">
+                <div class="step-num">01</div>
+                <h3>A conversation, not a test</h3>
+                <p>Tell us what triggers your anxiety, how long you've been avoiding, and what you want to get back to.
+                    No fitness stats.</p>
+            </div>
+            <div class="step reveal reveal-d1">
+                <div class="step-num">02</div>
+                <h3>A plan built for you</h3>
+                <p>AI generates sessions with tiny intervals. Your first jog might be 15 seconds. The plan adapts every
+                    week based on how you feel.</p>
+            </div>
+            <div class="step reveal reveal-d2">
+                <div class="step-num">03</div>
+                <h3>A calm voice walks with you</h3>
+                <p>Voice narration tells you what to do. Phone stays in your pocket. If anxiety rises, one tap brings
+                    guided recovery.</p>
+            </div>
+            <div class="step reveal reveal-d3">
+                <div class="step-num">04</div>
+                <h3>Your comfort grows</h3>
+                <p>Watch what used to be a 7/10 become a 3. Track recovery speed, consistency, and milestones — not
+                    miles or calories.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-strip" id="features">
+        <div class="features-inner">
+            <h2 class="reveal">Designed for anxiety,<br>not&nbsp;fitness.</h2>
+            <div class="feat-grid">
+                <div class="feat reveal">
+                    <h4>"I feel it starting"</h4>
+                    <p>When anxiety rises mid-session, one tap shifts to guided recovery. Breathing cues, haptic
+                        feedback, reassurance — without stopping.</p>
+                </div>
+                <div class="feat reveal reveal-d1">
+                    <h4>AI-adaptive plans</h4>
+                    <p>Plans evolve week by week based on your anxiety levels and recovery. Never too much, never too
+                        fast.</p>
+                </div>
+                <div class="feat reveal reveal-d2">
+                    <h4>Voice-guided sessions</h4>
+                    <p>A calm voice walks you through every step. Lock your phone and go — haptic alerts signal step
+                        changes.</p>
+                </div>
+                <div class="feat reveal">
+                    <h4>No guilt, no streaks</h4>
+                    <p>Bad day? Tap "Not today." Get a breathing exercise or a gentle walk. No broken streaks. Skipping
+                        is part of the process.</p>
+                </div>
+                <div class="feat reveal reveal-d1">
+                    <h4>Comfort tracking</h4>
+                    <p>Progress measured by decreasing anxiety and faster recovery — not pace or calories. Your body is
+                        learning.</p>
+                </div>
+                <div class="feat reveal reveal-d2">
+                    <h4>Pace — your companion</h4>
+                    <p>A friendly cloud mascot that walks with you, celebrates your wins, and never pushes too hard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing-section" id="pricing">
+        <div class="eyebrow sage">Pricing</div>
+        <h2>Start free. Keep going if it&nbsp;helps.</h2>
+        <p class="sub">3 free sessions — enough to feel understood and experience the core mechanism working.</p>
+        <div class="price-row">
+            <div class="price-box reveal">
+                <div class="price-name">Free</div>
+                <div class="price-amt">$0</div>
+                <div class="price-per">3 sessions included</div>
+                <ul class="price-list">
+                    <li>Full onboarding</li>
+                    <li>AI-generated starter plan</li>
+                    <li>"I feel it starting" support</li>
+                    <li>Voice-guided sessions</li>
+                </ul><a href="#download" class="btn btn-ghost">Get started</a>
+            </div>
+            <div class="price-box pop reveal reveal-d1">
+                <div class="price-name">Annual</div>
+                <div class="price-amt">$99.99</div>
+                <div class="price-per">$1.92/week · billed annually</div>
+                <ul class="price-list">
+                    <li>Everything in Free</li>
+                    <li>Unlimited adaptive sessions</li>
+                    <li>Full progress dashboard</li>
+                    <li>Up to 5 sessions/week</li>
+                    <li>3 plan regenerations/week</li>
+                </ul><a href="#download" class="btn btn-dark">Start free, then upgrade</a>
+            </div>
+            <div class="price-box reveal reveal-d2">
+                <div class="price-name">Weekly</div>
+                <div class="price-amt">$4.99</div>
+                <div class="price-per">per week · cancel anytime</div>
+                <ul class="price-list">
+                    <li>Everything in Annual</li>
+                    <li>No long commitment</li>
+                    <li>Perfect for trying it out</li>
+                </ul><a href="#download" class="btn btn-ghost">Try one week</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+        <h2>Questions</h2>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+                Is this therapy? <span>+</span></div>
+            <div class="faq-a">No. SteadyPace is a wellness tool — not a medical device, therapeutic intervention, or
+                substitute for professional treatment. It uses principles inspired by graded exposure but is not a
+                clinical implementation. Always consult a healthcare provider if you have a diagnosed condition.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+                What if I panic during a session? <span>+</span></div>
+            <div class="faq-a">Tap "I feel it starting." The app shifts to guided recovery with breathing cues, haptic
+                feedback, and reassurance. It encourages you to slow down — not stop — helping your body learn the
+                sensation passes.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+                How is this different from Couch to 5K? <span>+</span></div>
+            <div class="faq-a">C25K assumes your challenge is fitness. SteadyPace assumes your challenge is anxiety.
+                Plans adapt based on anxiety levels, not running speed. Success is measured by decreasing discomfort,
+                not distance.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+                Do I need to be a runner? <span>+</span></div>
+            <div class="faq-a">No. SteadyPace supports running, gym workouts, hiking, and general exercise. You tell us
+                what you want to get back to and we build around that.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+                Can I cancel anytime? <span>+</span></div>
+            <div class="faq-a">Yes. Cancel through your Apple ID settings. No questions, no guilt, no dark patterns.
+            </div>
+        </div>
+    </section>
+
+    <section class="final" id="download">
+        <h2>Ready to start <em><span class="cycle-word" id="activity-word">walking</span>?</em></h2>
+        <p id="activity-line">Not running. Not sprinting. Just walking — and proving to yourself that your body can
+            handle&nbsp;it.</p><a
+            href="https://apps.apple.com/app/steadypace" class="btn btn-light"><svg width="18" height="18"
+                viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+            </svg>Download for iOS</a>
+    </section>
+
+    <footer>
+        <div>
+            <div class="footer-links" style="margin-bottom:12px"><a href="/privacy.html">Privacy</a><a
+                    href="/terms.html">Terms</a></div>
+            <p class="footer-disclaimer">SteadyPace is a product of Zero To Build LLC. It is a wellness tool — not a
+                medical device or substitute for professional treatment. It does not diagnose, treat, cure, or prevent
+                any condition. Nothing on this website constitutes medical advice. © 2026 Zero To Build LLC.</p>
+        </div>
+        <div style="font-family:var(--serif);font-size:18px;color:rgba(255,255,255,.15)">SteadyPace</div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60) });
+        const obs = new IntersectionObserver(e => { e.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target) } }) }, { threshold: .15 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        const activities = [
+            { word: 'walking', line: 'Not running. Not sprinting. Just walking — and proving to yourself that your body can handle it.' },
+            { word: 'running', line: 'Not racing. Not max effort. Just running at a pace that feels steady and safe.' },
+            { word: 'jogging', line: 'Not all-out cardio. Just jogging in gentle intervals your nervous system can trust.' },
+            { word: 'hiking', line: 'Not peak chasing. Just hiking with calm effort, fresh air, and confidence in your body.' },
+            { word: 'weight lifting', line: 'Not pushing to failure. Just weight lifting with controlled reps and grounded recovery.' }
+        ];
+
+        let activityIndex = 0;
+        const activityWord = document.getElementById('activity-word');
+        const activityLine = document.getElementById('activity-line');
+
+        setInterval(() => {
+            activityIndex = (activityIndex + 1) % activities.length;
+            const next = activities[activityIndex];
+            activityWord.classList.remove('swap');
+            void activityWord.offsetWidth;
+            activityWord.textContent = next.word;
+            activityWord.classList.add('swap');
+            activityLine.textContent = next.line;
+        }, 4200);
+    </script>
+</body>
+
+</html>

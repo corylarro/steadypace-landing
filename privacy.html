@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — SteadyPace</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #FAF8F5;
+            color: #2C2C2C;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 120px 24px 80px;
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .date {
+            color: #9B9B9B;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 36px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 15px;
+            color: #4A4A4A;
+            margin-bottom: 16px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            font-size: 15px;
+            color: #4A4A4A;
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #7A8F7C;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            background: rgba(250, 248, 245, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        nav a {
+            font-family: 'DM Serif Display', serif;
+            font-size: 22px;
+            color: #5B6F5D;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav><a href="/">SteadyPace</a></nav>
+    <div class="container">
+        <h1>Privacy Policy</h1>
+        <p class="date">Last updated: April 30, 2026</p>
+
+        <h2>What We Collect</h2>
+        <p>SteadyPace collects the following data to provide and improve our service:</p>
+        <ul>
+            <li><strong>Account data:</strong> Your Apple ID identifier (used for authentication). We do not store your
+                name or email unless you provide it.</li>
+            <li><strong>Onboarding responses:</strong> Your exercise goals, anxiety triggers, comfort levels, and
+                preferences. This data is used to generate your personalized exercise plans.</li>
+            <li><strong>Session data:</strong> Pre-session check-in scores, post-session anxiety ratings, recovery
+                times, and whether you used the "I feel it starting" button. This data drives plan adaptation and
+                progress tracking.</li>
+            <li><strong>Usage data:</strong> Session completion, skips, and plan regenerations. No browsing or location
+                data is collected.</li>
+        </ul>
+
+        <h2>How We Use Your Data</h2>
+        <ul>
+            <li>Generate and adapt your personalized exercise plans via AI (Anthropic Claude)</li>
+            <li>Track your progress and display comfort trends</li>
+            <li>Generate voice narration for your sessions (ElevenLabs)</li>
+            <li>Provide anonymized, aggregated social proof ("412 people completed a session this week")</li>
+        </ul>
+
+        <h2>Third-Party Services</h2>
+        <ul>
+            <li><strong>Supabase:</strong> Database and authentication. Your data is stored in Supabase's hosted
+                PostgreSQL database with row-level security.</li>
+            <li><strong>Anthropic:</strong> AI plan generation. Your onboarding profile and session history are sent to
+                generate exercise plans. Anthropic does not retain this data for training.</li>
+            <li><strong>ElevenLabs:</strong> Voice narration. Session step instructions are sent to generate audio. No
+                personally identifiable information is included.</li>
+            <li><strong>RevenueCat:</strong> Subscription management. Manages your subscription status and purchase
+                history.</li>
+            <li><strong>Cloudflare:</strong> API hosting and audio file storage.</li>
+        </ul>
+
+        <h2>Data Security</h2>
+        <p>All data is transmitted over HTTPS. Database access is protected by row-level security policies ensuring you
+            can only access your own data. Authentication tokens are stored securely on your device.</p>
+
+        <h2>Data Retention</h2>
+        <p>Your data is retained as long as your account is active. You can request deletion of your account and all
+            associated data through the App's settings.</p>
+
+        <h2>Your Rights</h2>
+        <p>You have the right to access, correct, or delete your personal data. You can export your session history or
+            request complete account deletion at any time through the App.</p>
+
+        <h2>Children</h2>
+        <p>SteadyPace is not intended for children under 13. We do not knowingly collect data from children.</p>
+
+        <h2>Disclaimer</h2>
+        <p>SteadyPace is a wellness tool, not a medical device, therapeutic intervention, or substitute for professional
+            medical, psychological, or psychiatric treatment. The App does not diagnose, treat, cure, or prevent any
+            disease, disorder, or condition. Nothing in the App or on this website constitutes medical advice. Always
+            consult a qualified healthcare provider before beginning any exercise program, particularly if you have a
+            diagnosed anxiety disorder, cardiac condition, or other health concern.</p>
+
+        <h2>Changes</h2>
+        <p>We may update this policy. Significant changes will be communicated through the App.</p>
+
+        <h2>Entity</h2>
+        <p>SteadyPace is a product of Zero To Build LLC. All references to "we," "us," or "our" in this policy refer to
+            Zero To Build LLC.</p>
+    </div>
+</body>
+
+</html>
