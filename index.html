@@ -676,6 +676,84 @@
             padding-bottom: 24px
         }
 
+        .support-section {
+            padding: 110px 48px;
+            background: var(--bg-2)
+        }
+
+        .support-inner {
+            max-width: 920px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 36px;
+            align-items: start
+        }
+
+        .support-copy h2 {
+            font-family: var(--serif);
+            font-size: clamp(32px, 4vw, 52px);
+            line-height: 1.08;
+            margin-bottom: 16px
+        }
+
+        .support-copy p {
+            font-size: 16px;
+            line-height: 1.75;
+            color: var(--fg-2);
+            max-width: 36ch
+        }
+
+        .support-form {
+            background: white;
+            border: 1.5px solid var(--bg-3);
+            border-radius: 22px;
+            padding: 28px
+        }
+
+        .support-form label {
+            display: block;
+            font-size: 12px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--fg-3);
+            margin-bottom: 8px;
+            font-weight: 600
+        }
+
+        .support-form input,
+        .support-form textarea {
+            width: 100%;
+            border: 1.5px solid var(--bg-3);
+            border-radius: 12px;
+            padding: 13px 14px;
+            font-family: var(--sans);
+            font-size: 15px;
+            color: var(--fg);
+            background: #fff;
+            margin-bottom: 16px;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s
+        }
+
+        .support-form textarea {
+            resize: vertical;
+            min-height: 140px
+        }
+
+        .support-form input:focus,
+        .support-form textarea:focus {
+            border-color: var(--sage);
+            box-shadow: 0 0 0 4px rgba(107, 143, 113, .15)
+        }
+
+        .support-note {
+            font-size: 12px;
+            color: var(--fg-3);
+            margin-top: 12px;
+            line-height: 1.6
+        }
+
         .final {
             padding: 140px 48px;
             text-align: center;
@@ -873,11 +951,20 @@
                 max-width: 400px
             }
 
+            .support-inner {
+                grid-template-columns: 1fr
+            }
+
+            .support-copy p {
+                max-width: 100%
+            }
+
             section,
             .steps-section,
             .features-strip,
             .pricing-section,
-            .faq-section {
+            .faq-section,
+            .support-section {
                 padding-left: 24px;
                 padding-right: 24px
             }
@@ -1138,6 +1225,37 @@
         </div>
     </section>
 
+    <section class="support-section" id="support">
+        <div class="support-inner">
+            <div class="support-copy reveal">
+                <div class="eyebrow sage">Support</div>
+                <h2>Need help?<br>We’re here for you.</h2>
+                <p>Use this form for account issues, billing questions, technical problems, or general support. We
+                    typically respond within 1-2 business days.</p>
+            </div>
+            <form class="support-form reveal reveal-d1" action="https://formspree.io/f/xqenapbk" method="POST">
+                <label for="support-name">Name</label>
+                <input id="support-name" name="name" type="text" autocomplete="name" required>
+
+                <label for="support-email">Email</label>
+                <input id="support-email" name="email" type="email" autocomplete="email" required>
+
+                <label for="support-topic">Topic</label>
+                <input id="support-topic" name="topic" type="text" placeholder="Billing, bug report, account access..."
+                    required>
+
+                <label for="support-message">Message</label>
+                <textarea id="support-message" name="message"
+                    placeholder="Tell us what’s happening and how we can help." required></textarea>
+
+                <input type="hidden" name="_subject" value="SteadyPace Support Request">
+                <button type="submit" class="btn btn-dark">Send support request</button>
+                <p class="support-note">By submitting this form, you agree we can contact you at the email you provide
+                    to resolve your support request.</p>
+            </form>
+        </div>
+    </section>
+
     <section class="final" id="download">
         <h2>Ready to start <em><span class="cycle-word" id="activity-word">walking</span>?</em></h2>
         <p id="activity-line">Not running. Not sprinting. Just walking — and proving to yourself that your body can
@@ -1152,7 +1270,7 @@
     <footer>
         <div>
             <div class="footer-links" style="margin-bottom:12px"><a href="/privacy/">Privacy</a><a
-                    href="/terms/">Terms</a></div>
+                    href="/terms/">Terms</a><a href="/#support">Support</a></div>
             <p class="footer-disclaimer">SteadyPace is a product of Zero To Build LLC. It is a wellness tool — not a
                 medical device or substitute for professional treatment. It does not diagnose, treat, cure, or prevent
                 any condition. Nothing on this website constitutes medical advice. © 2026 Zero To Build LLC.</p>
