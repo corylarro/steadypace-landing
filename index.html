@@ -188,6 +188,47 @@
             animation: fadeUp .8s .8s forwards
         }
 
+        .hero-waitlist {
+            display: flex;
+            gap: 10px;
+            width: min(100%, 480px);
+            opacity: 0;
+            animation: fadeUp .8s .8s forwards
+        }
+
+        .hero-waitlist input {
+            flex: 1;
+            min-width: 0;
+            border: 1.5px solid var(--bg-3);
+            border-radius: 100px;
+            padding: 0 20px;
+            font-family: var(--sans);
+            font-size: 15px;
+            color: var(--fg);
+            background: rgba(255, 255, 255, .8);
+            outline: none;
+            transition: border-color .2s, box-shadow .2s, background .2s
+        }
+
+        .hero-waitlist input:focus {
+            background: #fff;
+            border-color: var(--sage);
+            box-shadow: 0 0 0 4px rgba(107, 143, 113, .15)
+        }
+
+        .hero-waitlist .btn {
+            white-space: nowrap
+        }
+
+        .hero-trust {
+            margin-top: 14px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--fg-3);
+            opacity: 0;
+            animation: fadeUp .8s 1s forwards
+        }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -895,6 +936,16 @@
                 max-width: 100%
             }
 
+            .hero-waitlist {
+                margin: 0 auto
+            }
+
+            .hero-trust {
+                max-width: 420px;
+                margin-left: auto;
+                margin-right: auto
+            }
+
             .hero-actions {
                 justify-content: center
             }
@@ -977,6 +1028,19 @@
         }
 
         @media(max-width:600px) {
+            .hero-waitlist {
+                flex-direction: column
+            }
+
+            .hero-waitlist input {
+                min-height: 54px;
+                text-align: center
+            }
+
+            .hero-waitlist .btn {
+                justify-content: center
+            }
+
             .final {
                 padding: 100px 20px
             }
@@ -1007,23 +1071,23 @@
 <body>
     <nav id="nav"><a href="/" class="logo">SteadyPace</a>
         <div class="nav-r"><a href="#how">How it works</a><a href="#features">Features</a><a
-                href="#pricing">Pricing</a><a href="#download" class="nav-pill">Get the app</a></div>
+                href="#pricing">Pricing</a><a href="#waitlist" class="nav-pill">Join waitlist</a></div>
     </nav>
 
     <section class="hero">
         <div class="hero-text">
-            <div class="hero-eyebrow">For people who want to move again</div>
+            <div class="hero-eyebrow">Early access for people who want to move again</div>
             <h1>Exercise<br>without <em>the anxiety.</em></h1>
             <p class="hero-body">Your heart races. You feel breathless. Something tells you to stop. SteadyPace helps
                 you stay — gently, at your pace, with a plan that adapts to&nbsp;you.</p>
-            <div class="hero-actions">
-                <a href="#download" class="btn btn-dark"><svg width="18" height="18" viewBox="0 0 24 24"
-                        fill="currentColor">
-                        <path
-                            d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-                    </svg>Download for iOS</a>
-                <a href="#how" class="btn btn-ghost">Learn more</a>
-            </div>
+            <form class="hero-waitlist" id="waitlist" action="https://formspree.io/f/mbdwdelw" method="POST">
+                <input name="email" type="email" autocomplete="email" placeholder="Your email" aria-label="Email address"
+                    required>
+                <input type="hidden" name="_subject" value="SteadyPace Waitlist Signup">
+                <button type="submit" class="btn btn-dark">Join early access</button>
+            </form>
+            <p class="hero-trust">For anyone who misses movement but dreads the sensations. Early invites, gentle launch
+                updates, no pressure.</p>
         </div>
         <div class="hero-visual">
             <div class="hero-panel">
@@ -1161,7 +1225,7 @@
                     <li>AI-generated starter plan</li>
                     <li>"I feel it starting" support</li>
                     <li>Voice-guided sessions</li>
-                </ul><a href="#download" class="btn btn-ghost">Get started</a>
+                </ul><a href="#waitlist" class="btn btn-ghost">Join waitlist</a>
             </div>
             <div class="price-box pop reveal reveal-d1">
                 <div class="price-name">Annual</div>
@@ -1173,7 +1237,7 @@
                     <li>Full progress dashboard</li>
                     <li>Up to 5 sessions/week</li>
                     <li>3 plan regenerations/week</li>
-                </ul><a href="#download" class="btn btn-dark">Start free, then upgrade</a>
+                </ul><a href="#waitlist" class="btn btn-dark">Get early access</a>
             </div>
             <div class="price-box reveal reveal-d2">
                 <div class="price-name">Weekly</div>
@@ -1183,7 +1247,7 @@
                     <li>Everything in Annual</li>
                     <li>No long commitment</li>
                     <li>Perfect for trying it out</li>
-                </ul><a href="#download" class="btn btn-ghost">Try one week</a>
+                </ul><a href="#waitlist" class="btn btn-ghost">Join waitlist</a>
             </div>
         </div>
     </section>
@@ -1257,14 +1321,10 @@
     </section>
 
     <section class="final" id="download">
-        <h2>Ready to start <em><span class="cycle-word" id="activity-word">walking</span>?</em></h2>
+        <h2>Ready to feel safe <em><span class="cycle-word" id="activity-word">walking</span>?</em></h2>
         <p id="activity-line">Not running. Not sprinting. Just walking — and proving to yourself that your body can
             handle&nbsp;it.</p><a
-            href="https://apps.apple.com/app/steadypace" class="btn btn-light"><svg width="18" height="18"
-                viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-            </svg>Download for iOS</a>
+            href="#waitlist" class="btn btn-light">Join the waitlist</a>
     </section>
 
     <footer>
